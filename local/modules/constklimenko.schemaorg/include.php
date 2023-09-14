@@ -15,6 +15,7 @@ Loader::includeModule($arModuleCfg['MODULE_ID']);
 $arClasses=array(
     /* Библиотеки и классы для авто загрузки */
     'Schemaorg\Options'=>'lib/Options.php',
+    'Schemaorg\Organization'=>'lib/Organization.php',
 
 );
 

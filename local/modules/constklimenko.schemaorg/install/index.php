@@ -40,6 +40,7 @@ class constklimenko_schemaorg extends CModule{
     {
         $this->InstallFiles();
         $this->InstallDB(false);
+        $this->InstallEvents();
         RegisterModule($this->MODULE_ID);
         return true;
     }
@@ -48,6 +49,7 @@ class constklimenko_schemaorg extends CModule{
     {
         $this->UnInstallDB(false);
         $this->UnInstallFiles();
+        $this->UnInstallEvents();
         UnRegisterModule($this->MODULE_ID);
         return true;
     }
@@ -65,6 +67,18 @@ class constklimenko_schemaorg extends CModule{
             $_SERVER["DOCUMENT_ROOT"]."/bitrix/components/constklimenko/"
         );
         return true;
+    }
+
+    public function InstallEvents()
+    {
+        RegisterModuleDependences("main", "OnEndBufferContent", $this->MODULE_ID, "Schemaorg\Organization", "createMicrodata");
+        return true;
+    }
+
+    public function UnInstallEvents()
+    {
+        UnRegisterModuleDependences("main", "OnEndBufferContent", $this->MODULE_ID, "Schemaorg\Organization", "createMicrodata");
+        return false;
     }
 
 
