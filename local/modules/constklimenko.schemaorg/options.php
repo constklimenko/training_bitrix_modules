@@ -3,7 +3,7 @@
 use Bitrix\Main\Loader;
 
 
-global $USER, $APPLICATION;
+global $USER, $APPLICATION,$mid;
 
 if (!$USER->IsAdmin()) {
     return;
@@ -32,9 +32,12 @@ $nameOption = Options::prepareOption($request,$arModuleCfg['MODULE_ID'],'name');
 
 //setting organization type
 $organization_type = Options::prepareOption($request,$arModuleCfg['MODULE_ID'],'organization_type');
+
+//setting logo
+$logoOption = Options::prepareOption($request,$arModuleCfg['MODULE_ID'],'logo');
 ?>
 
-<form method="POST" action="<?= $currentUrl; ?>"  id="schemaoptions_form"  >
+<form method="POST" action="<?= $currentUrl; ?>"  id="schemaoptions_form"  name="schemaoptions_form" >
     <?= bitrix_sessid_post(); ?>
 
 <table>
@@ -68,6 +71,29 @@ $organization_type = Options::prepareOption($request,$arModuleCfg['MODULE_ID'],'
 		</td>
 		<td>
 			<input id="url" name="url" type="text" value="<?=$urlOption;?>">
+		</td>
+	</tr>
+
+	<tr>
+		<td><label for="logo">Путь к файлу логотипа</label></td>
+		<td>
+	<?php CAdminFileDialog::ShowScript
+			(
+				[
+					"event" => "BtnClickExpPath",
+					"arResultDest" => array("FORM_NAME" => "schemaoptions_form", "FORM_ELEMENT_NAME" => 'logo'),
+					"arPath" => array("PATH" => GetDirPath('/')),
+					"select" => 'F',// F - file only, D - folder only
+					"operation" => 'O',// O - open, S - save
+					"showUploadTab" => false,
+					"showAddToMenuTab" => false,
+					"fileFilter" => 'image',
+					"SaveConfig" => false,
+				]
+			);
+			?><input type="text" name="logo" id="logo" size="50" maxlength="255" value="<?=$logoOption;?>">&nbsp;
+			<input type="button" name="browseExpPath" value="..." onClick="BtnClickExpPath()">
+
 		</td>
 	</tr>
 	<tr>
