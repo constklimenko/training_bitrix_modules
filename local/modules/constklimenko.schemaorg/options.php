@@ -50,6 +50,13 @@ $streetAddress = Options::prepareOption($request, $arModuleCfg['MODULE_ID'], 'st
 
 //setting postalCode
 $postalCode = Options::prepareOption($request, $arModuleCfg['MODULE_ID'], 'postalCode');
+
+//creating open hours string
+$openHoursString = Options::prepareOpenHours($request, $arModuleCfg);
+$arOpenHours = Options::parseOpenHours($openHoursString, $arModuleCfg);
+
+//setting description
+$description = Options::prepareOption($request, $arModuleCfg['MODULE_ID'], 'description');
 ?>
 
 <form method="POST" action="<?= $currentUrl; ?>" id="schemaoptions_form" name="schemaoptions_form">
@@ -77,6 +84,14 @@ $postalCode = Options::prepareOption($request, $arModuleCfg['MODULE_ID'], 'posta
 			</td>
 			<td>
 				<input id="name" name="name" type="text" value="<?= $nameOption; ?>">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="description">Описание организации </label>
+			</td>
+			<td>
+				<textarea id="description" name="description"><?= $description; ?></textarea>
 			</td>
 		</tr>
 
@@ -117,53 +132,84 @@ $postalCode = Options::prepareOption($request, $arModuleCfg['MODULE_ID'], 'posta
 					<tr>
 						<th span="2">Адрес</th>
 					</tr>
+					<tr>
+						<td>
+							<label for="addressCountry">Страна</label>
+						</td>
+						<td>
+							<input name="addressCountry" id="addressCountry" type="text" value="<?= (!empty($addressCountry)) ? $addressCountry : 'Россия'; ?>">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="addressRegion">Регион</label>
+						</td>
+						<td>
+							<input name="addressRegion" id="addressRegion" type="text" value="<?= $addressRegion; ?>">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="addressLocality">Город</label>
+						</td>
+						<td>
+							<input name="addressLocality" id="addressLocality" type="text" value="<?= $addressLocality; ?>">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="postalCode">Почтовый индекс</label>
+						</td>
+						<td>
+							<input name="postalCode" id="postalCode" type="text" value="<?= $postalCode; ?>">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="streetAddress">Улица, дом</label>
+						</td>
+						<td>
+							<input name="streetAddress" id="streetAddress" type="text" value="<?= $streetAddress; ?>">
+						</td>
+					</tr>
 				</table>
 			</td>
 		</tr>
 
 		<tr>
 			<td span="2">
+				<table>
+					<tr>
+						<th span="2">Время работы</th>
+					</tr>
+                    <?php foreach ($arModuleCfg['DAYS_OF_WEEK'] as $day => $dayName): ?>
+						<tr>
+							<td>
+								<label for="hours_<?= $day; ?>"><?= $dayName; ?></label>
+								<input type="checkbox" name="hours_<?= $day; ?>_checked" id="hours_<?= $day; ?>_checked" <?php if (!empty($arOpenHours[$day])) echo 'checked'; ?>>
+							</td>
+							<td>С
+								<select name="hours_beginning_<?= $day; ?>" id="hours_beginning_<?= $day; ?>">
+                                    <?php foreach ($arModuleCfg['HOURS_OF_DAY'] as  $hour): ?>
+										<option value="<?= $hour; ?>" <?php if ($hour == $arOpenHours[$day]['open']) echo 'selected'; ?>><?= $hour; ?></option>
+                                    <?php endforeach; ?>
+								</select>
+								до
+								<select name="hours_ending_<?= $day; ?>" id="hours_ending_<?= $day; ?>">
+									<?php foreach ($arModuleCfg['HOURS_OF_DAY'] as  $hour): ?>
+										<option value="<?= $hour; ?>" <?php if ($hour == $arOpenHours[$day]['close']) echo 'selected'; ?>><?= $hour; ?></option>
+									<?php endforeach; ?>
+								</select>
+							</td>
+						</tr>
+                    <?php endforeach; ?>
+
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td span="2">
 				<button type="submit" class="adm-btn"> Сохранить</button>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="addressCountry">Страна</label>
-			</td>
-			<td>
-				<input name="addressCountry" id="addressCountry" type="text" value="<?= (!empty($addressCountry)) ? $addressCountry : 'Россия'; ?>">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="addressRegion">Регион</label>
-			</td>
-			<td>
-				<input name="addressRegion" id="addressRegion" type="text" value="<?= $addressRegion; ?>">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="addressLocality">Город</label>
-			</td>
-			<td>
-				<input name="addressLocality" id="addressLocality" type="text" value="<?= $addressLocality; ?>">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="postalCode">Почтовый индекс</label>
-			</td>
-			<td>
-				<input name="postalCode" id="postalCode" type="text" value="<?= $postalCode; ?>">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="streetAddress">Улица, дом</label>
-			</td>
-			<td>
-				<input name="streetAddress" id="streetAddress" type="text" value="<?= $streetAddress; ?>">
 			</td>
 		</tr>
 	</table>

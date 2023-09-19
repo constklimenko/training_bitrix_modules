@@ -45,7 +45,6 @@ class Organization
         $arMicrodata["name"] = (string) self::getOption('name');
         $arMicrodata["url"] = (string) self::getOption('url');
         $arMicrodata["logo"] = (string) self::getOption('logo');
-
         $arMicrodata["address"] = [
             "@type" => "PostalAddress",
             "addressCountry" => (string) self::getOption('addressCountry'),
@@ -54,6 +53,8 @@ class Organization
             "postalCode" => (string) self::getOption('postalCode'),
             "streetAddress" => (string) self::getOption('streetAddress')
         ];
+        $arMicrodata["openingHours"] = (string) self::getOption('openHours');
+        $arMicrodata["description"] = (string) self::getOption('description');
 
         $json = json_encode($arMicrodata);
 
