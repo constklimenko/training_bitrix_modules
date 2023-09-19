@@ -29,6 +29,9 @@ $urlOption = Options::prepareUrl($request,$arModuleCfg['MODULE_ID']);
 
 //setting organization name
 $nameOption = Options::prepareOption($request,$arModuleCfg['MODULE_ID'],'name');
+
+//setting organization type
+$organization_type = Options::prepareOption($request,$arModuleCfg['MODULE_ID'],'organization_type');
 ?>
 
 <form method="POST" action="<?= $currentUrl; ?>"  id="schemaoptions_form"  >
@@ -44,18 +47,9 @@ $nameOption = Options::prepareOption($request,$arModuleCfg['MODULE_ID'],'name');
 		</td>
 		<td>
 			<select name="organization_type" id="organization_type">
-				<option value="Organization">Организация</option>
-				<option value="LocalBusiness">Местный бизнес</option>
-				<option value="Airline">Авиакомпания</option>
-				<option value="Consortium">Консорциум</option>
-				<option value="Corporation">Корпорация</option>
-				<option value="EducationalOrganization">Образовательная организация</option>
-				<option value="FundingScheme">Схема финансирования</option>
-				<option value="GovernmentOrganization">Государственная организация</option>
-				<option value="MedicalOrganization">Медицинская организация</option>
-				<option value="NGO">Общественная организация (НПО)</option>
-				<option value="NewsMediaOrganization">Средство массовой информации</option>
-				<option value="OnlineBusiness">Интернет-бизнес</option>
+				<?php foreach ($arModuleCfg['ORGANIZATION_TYPE'] as $option): ?>
+					<option value="<?=$option;?>" <?php if ($organization_type==$option) echo 'selected'; ?>><?=$option;?></option>
+				<?php endforeach; ?>
 			</select>
 		</td>
 	</tr>

@@ -41,7 +41,7 @@ class Organization
             "@context"=> "http://www.schema.org"
         ];
 
-        $arMicrodata["@type"] = "Organization";
+        $arMicrodata["@type"] = (string) self::getOption('organization_type');
         $arMicrodata["name"] = (string) self::getOption('name');
         $arMicrodata["url"] = (string) self::getOption('url');
 
