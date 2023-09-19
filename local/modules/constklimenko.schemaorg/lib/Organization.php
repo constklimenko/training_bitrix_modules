@@ -15,15 +15,15 @@ class Organization
     /**
      * @param $content
      */
-    public static function createMicrodata(&$content){
+    public static function createMicrodata(string &$content): void{
 
         if (\CSite::InDir('/bitrix/')) {
             return;
         };
-        if (strtoupper($_SERVER['REQUEST_METHOD']) == 'POST') {
+        if (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') {
             return;
         }
-        if ((!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')) {
+        if ((!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')) {
             return;
         }
 
@@ -35,15 +35,15 @@ class Organization
     /**
      * @return string
      */
-    public static function getJSON()
+    public static function getJSON(): string
     {
         $arMicrodata = [
             "@context"=> "http://www.schema.org"
         ];
 
         $arMicrodata["@type"] = "Organization";
-        $arMicrodata["name"] = self::getOption('name');
-        $arMicrodata["url"] = self::getOption('url');
+        $arMicrodata["name"] = (string) self::getOption('name');
+        $arMicrodata["url"] = (string) self::getOption('url');
 
         $json = json_encode($arMicrodata);
 
