@@ -57,6 +57,9 @@ $arOpenHours = Options::parseOpenHours($openHoursString, $arModuleCfg);
 
 //setting description
 $description = Options::prepareOption($request, $arModuleCfg['MODULE_ID'], 'description');
+
+//setting telephone
+$telephone = Options::prepareOption($request, $arModuleCfg['MODULE_ID'], 'telephone');
 ?>
 
 <form method="POST" action="<?= $currentUrl; ?>" id="schemaoptions_form" name="schemaoptions_form">
@@ -103,7 +106,14 @@ $description = Options::prepareOption($request, $arModuleCfg['MODULE_ID'], 'desc
 				<input id="url" name="url" type="text" value="<?= $urlOption; ?>">
 			</td>
 		</tr>
-
+		<tr>
+			<td>
+				<label for="telephone">Телефон</label>
+			</td>
+			<td>
+				<input id="telephone" name="telephone" type="text" value="<?= $telephone; ?>">
+			</td>
+		</tr>
 		<tr>
 			<td><label for="logo">Путь к файлу логотипа</label></td>
 			<td>
@@ -121,7 +131,7 @@ $description = Options::prepareOption($request, $arModuleCfg['MODULE_ID'], 'desc
                         "SaveConfig"       => false,
                     ]
                 );
-                ?><input type="text" name="logo" id="logo" size="50" maxlength="255" value="<?= $logoOption; ?>">&nbsp;
+                ?><input type="text" name="logo" id="logo" size="20"  value="<?= $logoOption; ?>">&nbsp;
 				<input type="button" name="browseExpPath" value="..." onClick="BtnClickExpPath()">
 
 			</td>

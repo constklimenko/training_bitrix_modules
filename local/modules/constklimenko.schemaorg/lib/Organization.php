@@ -55,6 +55,7 @@ class Organization
         ];
         $arMicrodata["openingHours"] = (string) self::getOption('openHours');
         $arMicrodata["description"] = (string) self::getOption('description');
+        $arMicrodata["telephone"] = (string) self::getOption('telephone');
 
         $json = json_encode($arMicrodata);
 
