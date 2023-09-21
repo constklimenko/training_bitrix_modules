@@ -19,20 +19,19 @@ class constklimenko_schemaorg extends CModule{
      */
     public function __construct()
     {
-        $this->MODULE_ID 		   = "constklimenko.schemaorg";
+        if (file_exists(__DIR__ . "/module.cfg.php")) {
+            include(__DIR__ . "/module.cfg.php");
+            $this->MODULE_ID 		   = $arModuleCfg['MODULE_ID'];
+            $this->MODULE_NAME 		   = $arModuleCfg['MODULE_NAME'];
+            $this->MODULE_DESCRIPTION = $arModuleCfg['MODULE_DESCRIPTION'];
+            $this->PARTNER_NAME 	   = $arModuleCfg['PARTNER_NAME'] ;
+        }
         $arModuleVersion = array();
-
-        include(__DIR__.'/version.php');
-
-        if (!empty($arModuleVersion['VERSION']))
-        {
+        if (file_exists(__DIR__ . "/version.php")) {
+            include(__DIR__.'/version.php');
             $this->MODULE_VERSION = $arModuleVersion["VERSION"];
             $this->MODULE_VERSION_DATE = $arModuleVersion["VERSION_DATE"];
         }
-            $this->MODULE_NAME 		   = "Пример модуля";
-            $this->MODULE_DESCRIPTION  = "описание модуля";
-            $this->PARTNER_NAME 	   = "Константин Клименко";
-
     }
 
 

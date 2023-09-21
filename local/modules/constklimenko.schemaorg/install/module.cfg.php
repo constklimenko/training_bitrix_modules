@@ -1,6 +1,9 @@
 <?php
 $arModuleCfg = [
     'MODULE_ID' => 'constklimenko.schemaorg',
+    'MODULE_NAME' => "Микроразметка schema.org для хэдера",
+    'MODULE_DESCRIPTION' => "Добавляет микроразметку в формате JSON",
+    'PARTNER_NAME' => "Константин Клименко",
     'ORGANIZATION_TYPE' => [
         'Organization',
         'LocalBusiness',
